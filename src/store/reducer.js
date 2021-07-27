@@ -78,6 +78,7 @@ studentselectedid : 0,
 isEditMode :false , 
 modalShow :false ,
 txtSearchValue : '' , 
+selectedFile : null
 };
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
@@ -217,7 +218,13 @@ txtSearchValue : action.txtSearchValue
  }
 
 
- 
+ case actionTypes.SelectFileHandler :
+console.log(action.selectedFile);
+ return {
+ ...state ,
+ selectedFile : action.selectedFile
+ }
+
 
 
   }

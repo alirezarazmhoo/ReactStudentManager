@@ -12,7 +12,6 @@ class Teachers extends Component {
 
 
 
-
 componentDidMount(){  
  this.props.Get_Data(false , "");
  }
@@ -48,27 +47,21 @@ edit = (e) =>{
 
 }
 postData = () => {
-this.props.PostDataHandler(this.props.inputs,this.props.studentselectedid,this.props.isEditMode);
+this.props.PostDataHandler(this.props.inputs,this.props.studentselectedid,this.props.isEditMode , this.props.selectedFile);
 
 }
 
+fileSelectHandler  = event => {
+
+this.props.SelectFileHandler(event.target.files[0]);
+}
 
 search = () =>{
-// axios.get('Students?txtSearch='+this.state.txtSearchValue).then(response => {
-//   this.setState({realstudents :[]})
-//   this.setState({realstudents :response.data.students})
-//   this.setState({txtSearchValue : ''});
-
-//   }); 
-
  this.props.Get_Data(true , this.props.txtSearchValue);
-
 }
+
 filltxtSearch = (e)=>{
-  //this.setState({txtSearchValue : e.target.value});
-
   this.props.SearchInputHandler(e.target.value);
-
 }
 
  render () {
@@ -91,12 +84,14 @@ let main = (<div><div className="container">
                         changed = {(event) => this.props.onIncrementCounter(event , formElement.id)}
                     />
                 ))}
+
+                <input onChange={this.fileSelectHandler} className="selectFile" type="file"  />
+                <img src={this.props.selectedFile} />
 <div>
 <button className="submit" onClick={()=> this.postData()} >{this.props.isEditMode == true ? "ویرایش" : "ثبت"}</button>
 <div>
 <input className="inputsearch" placeholder="متن جستجو را وارد کنید" value={this.props.txtSearchValue} onChange = {(event) => this.filltxtSearch(event)}/>
 <button onClick={this.search} className="search"  >جستجو</button>
-
 </div>
 
 
@@ -131,20 +126,22 @@ const mapStateToProps = state => {
         studentselectedid : state.studentselectedid,
         isEditMode : state.isEditMode , 
         modalShow :state.modalShow,
-        txtSearchValue : state.txtSearchValue
+        txtSearchValue : state.txtSearchValue , 
+        selectedFile : state.selectedFile
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
          onIncrementCounter: (element , id) => dispatch({type: 'InputUserHandler' , el : element , id : id}),
-         PostDataHandler : (el,id,mode) => dispatch(TeacherActions.PostDataHandler(el,id,mode)),
+         PostDataHandler : (el,id,mode,file) => dispatch(TeacherActions.PostDataHandler(el,id,mode, file)),
          Get_Data : (isSearch,txt) => dispatch(TeacherActions.initGetData(isSearch, txt)),
          Remove_Data : (id) => dispatch(TeacherActions.Remove_Data(id)),
          EditData : (name) => dispatch(TeacherActions.EditData(name)),
          ModalHandler : (id) => dispatch(TeacherActions.ModalHandler(id)),
          CloseModalHandler : (id) => dispatch(TeacherActions.CloseModalHandler()),
          SearchInputHandler : (txt)=> dispatch(TeacherActions.SearchInputHandler(txt)),
+         SelectFileHandler  : (file) => dispatch(TeacherActions.SelectFileHandler(file))
     }
 };
 

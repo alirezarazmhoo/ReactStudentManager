@@ -11,6 +11,8 @@ export const EditData = 'EditData';
 export const ModalHandler = 'ModalHandler';
 export const CloseModalHandler = 'CloseModalHandler';
 export const SearchInputHandler = 'SearchInputHandler';
+export const SelectFileHandler = 'SelectFileHandler';
+
 
 
 

@@ -66,7 +66,8 @@ return dispatch => {
  }; 
 }
 
-export const PostDataHandler = (inputs,id , mode)=> {
+export const PostDataHandler = (inputs,id , mode , file)=> {
+const fd  = new FormData();
 
 let url = "Students/EditStudent";
 if(mode == true){
@@ -86,7 +87,15 @@ nationalcode : inputs.nationalcode.value,
 address :inputs.adddress.value,
 id :id
 }
- axios.post(url, post).then(response => {
+fd.append("name" , inputs.name.value);
+fd.append("lastname" , inputs.lastname.value);
+fd.append("nationalcode" , inputs.nationalcode.value);
+fd.append("address" , inputs.adddress.value);
+fd.append("id" , id);
+fd.append("file" , file);
+console.log(file);
+
+ axios.post(url, fd ).then(response => {
  axios.get('Students?pageNumber=1' ).then(response => {
   const myites5 = response.data.students ; 
  for (var i = 0; i < myites5.length; i++) {
@@ -133,4 +142,13 @@ txtSearchValue  : txt
 }
 
 
+}
+
+
+export const SelectFileHandler = (file) =>{
+
+return {type : actionTypes.SelectFileHandler , 
+selectedFile  : file
+
+}
 }

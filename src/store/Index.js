@@ -7,5 +7,6 @@ export {
     EditData,
     ModalHandler,
     CloseModalHandler,
-    SearchInputHandler
+    SearchInputHandler, 
+    SelectFileHandler
 } from './actions';
