@@ -16,6 +16,7 @@ class Teachers extends Component {
 
 componentDidMount(){  
  this.props.Get_Data(false , "");
+
  }
 
 
@@ -58,8 +59,7 @@ else{
 postData = () => {
 this.setState({file:  null});
 this.props.SelectFileHandler(null);
-
-this.props.PostDataHandler(this.props.inputs,this.props.studentselectedid,this.props.isEditMode , this.props.selectedFile);
+this.props.PostDataHandler(this.props.inputs,this.props.studentselectedid,this.props.isEditMode , this.props.selectedFile , this.props.majorId);
 
 }
 
@@ -78,9 +78,13 @@ search = () =>{
 filltxtSearch = (e)=>{
   this.props.SearchInputHandler(e.target.value);
 }
+  handleChange = (e) =>{
+
+  this.props.MajorInputHandler(e.target.value);
+}
 
  render () {
-  const tableHeaders = ['عملیات','تصویر','آدرس' , 'کدملی', 'نام خانوادگی' , 'نام', 'ردیف'];
+  const tableHeaders = ['عملیات','مدرک','تصویر','آدرس' , 'کدملی', 'نام خانوادگی' , 'نام', 'ردیف'];
   const formElementsArray = [];
   for (let key in this.props.inputs) {
             formElementsArray.push({
@@ -99,7 +103,7 @@ let main = (<div><div className="container">
                         changed = {(event) => this.props.onIncrementCounter(event , formElement.id)}
                     />
                 ))}
-<SelectOption />
+<SelectOption handleChange={this.handleChange} list={this.props.majorList} />
                 <input onChange={this.fileSelectHandler} className="selectFile" type="file"  />
  {this.state.file !=null ?<Upload url={this.state.file} /> : "" }
 
@@ -109,8 +113,6 @@ let main = (<div><div className="container">
 <input className="inputsearch" placeholder="متن جستجو را وارد کنید" value={this.props.txtSearchValue} onChange = {(event) => this.filltxtSearch(event)}/>
 <button onClick={this.search} className="search"  >جستجو</button>
 </div>
-
-
 
 </div>
 <Table personsArray={this.props.mystudents} headers={tableHeaders} question={this.question.bind(this)} edit={this.edit.bind(this)}  
@@ -143,21 +145,24 @@ const mapStateToProps = state => {
         isEditMode : state.isEditMode , 
         modalShow :state.modalShow,
         txtSearchValue : state.txtSearchValue , 
-        selectedFile : state.selectedFile
+        selectedFile : state.selectedFile , 
+        majorId :state.majorId,
+        majorList : state.majorList
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
          onIncrementCounter: (element , id) => dispatch({type: 'InputUserHandler' , el : element , id : id}),
-         PostDataHandler : (el,id,mode,file) => dispatch(TeacherActions.PostDataHandler(el,id,mode, file)),
+         PostDataHandler : (el,id,mode,file , majorId) => dispatch(TeacherActions.PostDataHandler(el,id,mode, file , majorId)),
          Get_Data : (isSearch,txt) => dispatch(TeacherActions.initGetData(isSearch, txt)),
          Remove_Data : (id) => dispatch(TeacherActions.Remove_Data(id)),
          EditData : (name) => dispatch(TeacherActions.EditData(name)),
          ModalHandler : (id) => dispatch(TeacherActions.ModalHandler(id)),
          CloseModalHandler : (id) => dispatch(TeacherActions.CloseModalHandler()),
          SearchInputHandler : (txt)=> dispatch(TeacherActions.SearchInputHandler(txt)),
-         SelectFileHandler  : (file) => dispatch(TeacherActions.SelectFileHandler(file))
+         SelectFileHandler  : (file) => dispatch(TeacherActions.SelectFileHandler(file)),
+         MajorInputHandler : (id) => dispatch(TeacherActions.MajorInputHandler(id)),
     }
 };
 

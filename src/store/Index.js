@@ -8,5 +8,6 @@ export {
     ModalHandler,
     CloseModalHandler,
     SearchInputHandler, 
-    SelectFileHandler
+    SelectFileHandler,
+    MajorInputHandler , 
 } from './actions';

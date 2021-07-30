@@ -4,15 +4,19 @@ class SelectOption extends Component {
   constructor(props){
     super(props)
     this.state = {
-      item: [{id:1 , name : 'کارشناسی'},{id:2 , name : 'دکتری'}]
+      item: this.props.list
     }
   }
+
   render() {
- let optionTemplate = this.state.item.map(v => (
+ let optionTemplate = this.props.list.map(v => (
       <option value={v.id}>{v.name}</option>
     ));
+
+
+
  return (
-<select name="major" value={this.state.item[]} >
+<select  onChange={this.props.handleChange}>
       {optionTemplate}
 </select>
     );

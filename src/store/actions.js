@@ -1,11 +1,13 @@
 import axios from '../axios';
 import * as actionTypes from './types';
 
-export const GetDataFromServer = ( studentlist ) => {
+export const GetDataFromServer = ( studentlist , majorList ) => {
+
 
 return {
       type: actionTypes.Get_Data,
-      realstudents : studentlist
+      realstudents : studentlist , 
+      majorList : majorList
     };
 
 };
@@ -18,7 +20,11 @@ export const FillData = () =>{
  for (var i = 0; i < myites4.length; i++) {
    arraystudent4.push(myites4[i]);
  }
+
+
  }); 
+
+
 return {
       type: actionTypes.Get_Data,
       realstudents : arraystudent4
@@ -28,6 +34,7 @@ return {
 export const initGetData = (isSearch , txt) => {
 
 let url = '';
+ const arrayMajorData = []  ;
 
 if(isSearch == true) {
 
@@ -44,13 +51,15 @@ return dispatch => {
  for (var i = 0; i < myites4.length; i++) {
    arraystudent4.push(myites4[i]);
  }
- console.log(arraystudent4);
- dispatch(GetDataFromServer(arraystudent4));
+
+ dispatch(GetDataFromServer(arraystudent4 ,GetMajorFromServer() ));
+ 
+
  }); 
 }
 }
 
-export const Remove_Data = (studentid) => {
+export const Remove_Data =  (studentid) => {
 
 const arraystudent5 = []  ;
 return dispatch => {
@@ -60,13 +69,21 @@ return dispatch => {
  for (var i = 0; i < myites5.length; i++) {
    arraystudent5.push(myites5[i]);
  }
- dispatch(GetDataFromServer(arraystudent5));
+let de  =  GetMajorFromServer() ;
+
+ dispatch(GetDataFromServer(arraystudent5,de));
  }); 
  });
  }; 
 }
 
-export const PostDataHandler = (inputs,id , mode , file)=> {
+
+
+
+
+
+
+export const PostDataHandler = (inputs,id , mode , file , majorId)=> {
 const fd  = new FormData();
 
 let url = "Students/EditStudent";
@@ -80,6 +97,7 @@ id = 0
 
 return dispatch => {
 const arraystudent5 = []  ;
+
 const post = {
 name :inputs.name.value ,
 lastname : inputs.lastname.value , 
@@ -93,7 +111,7 @@ fd.append("nationalcode" , inputs.nationalcode.value);
 fd.append("address" , inputs.adddress.value);
 fd.append("id" , id);
 fd.append("file" , file);
-fd.append("majorId" , 1);
+fd.append("majorId" , majorId);
 
 
  axios.post(url, fd ).then(response => {
@@ -103,11 +121,25 @@ fd.append("majorId" , 1);
  for (var i = 0; i < myites5.length; i++) {
    arraystudent5.push(myites5[i]);
  }
- dispatch(GetDataFromServer(arraystudent5));
+ dispatch(GetDataFromServer(arraystudent5 ,GetMajorFromServer() ));
  }); 
   });
 }
 }
+export const GetMajorFromServer = ( )=>{
+const arrayMajorData = [];
+
+axios.get('Major' ).then(response => {
+  const majorides = response.data.majors ; 
+ for (var i = 0; i < majorides.length; i++) {
+   arrayMajorData.push(majorides[i]);
+ }
+ }); 
+ return arrayMajorData ; 
+
+}
+
+
 
 
 export const EditData = (name )=>{
@@ -156,3 +188,13 @@ selectedFile  : file
 
 }
 }
+
+
+export const MajorInputHandler = (id) => {
+return {
+   type : actionTypes.MajorInputHandler , 
+majaorid  : id
+
+}
+}
+

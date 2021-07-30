@@ -78,7 +78,9 @@ studentselectedid : 0,
 isEditMode :false , 
 modalShow :false ,
 txtSearchValue : '' , 
-selectedFile : null
+selectedFile : null , 
+majorId : 0,
+majorList : []
 };
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
@@ -178,6 +180,7 @@ isEditMode : true,
 
 
 case actionTypes.Get_Data :
+
 var resetOrderForm = {...state.orderForm};
 resetOrderForm.name.value = '';
 resetOrderForm.lastname.value = ''; 
@@ -190,8 +193,8 @@ resetOrderForm.adddress.value = '';
  orderForm : resetOrderForm,
  isEditMode : false,
  modalShow : false , 
- txtSearchValue : ''
-
+ txtSearchValue : '',
+ majorList : action.majorList
  }
 
 case actionTypes.ModalHandler :
@@ -220,13 +223,17 @@ txtSearchValue : action.txtSearchValue
 
 
  case actionTypes.SelectFileHandler :
-console.log(action.selectedFile);
+
  return {
  ...state ,
  selectedFile : action.selectedFile
  }
 
-
+ case actionTypes.MajorInputHandler :
+ return {
+ ...state ,
+ majorId : action.majaorid
+ }
 
   }
     return state;
