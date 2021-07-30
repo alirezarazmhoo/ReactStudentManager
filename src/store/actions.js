@@ -93,9 +93,11 @@ fd.append("nationalcode" , inputs.nationalcode.value);
 fd.append("address" , inputs.adddress.value);
 fd.append("id" , id);
 fd.append("file" , file);
-console.log(file);
+fd.append("majorId" , 1);
+
 
  axios.post(url, fd ).then(response => {
+   console.log(response.message);
  axios.get('Students?pageNumber=1' ).then(response => {
   const myites5 = response.data.students ; 
  for (var i = 0; i < myites5.length; i++) {
@@ -108,10 +110,12 @@ console.log(file);
 }
 
 
-export const EditData = (name)=>{
+export const EditData = (name )=>{
+
 return {
       type: actionTypes.EditData,
-      name : name
+      name : name,
+     
     };
 }
 

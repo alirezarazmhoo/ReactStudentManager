@@ -6,11 +6,13 @@ import MModal from '../components/UI/Modal/Modal';
 import Input from '../components/UI/Input/Input';
 import *  as TeacherActions from '../store/Index';
 import Table from '../components/UI/Table/Table';
-
-
+import Upload from '../components/UI/Upload/Upload';
+import SelectOption from '../components/UI/SelectOption/SelectOption';
 class Teachers extends Component {
 
-
+    state = {
+      file: this.props.selectedFile
+    }
 
 componentDidMount(){  
  this.props.Get_Data(false , "");
@@ -42,11 +44,21 @@ this.props.CloseModalHandler();
 }
 
 edit = (e) =>{
+ this.props.EditData( e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells );
+if(e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[1].getElementsByTagName("img")[0] !=null)
+{
 
- this.props.EditData( e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells);
+this.setState({file: e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[1].getElementsByTagName("img")[0].src});
+}
+else{
+    this.setState({file : null})
+}
 
 }
 postData = () => {
+this.setState({file:  null});
+this.props.SelectFileHandler(null);
+
 this.props.PostDataHandler(this.props.inputs,this.props.studentselectedid,this.props.isEditMode , this.props.selectedFile);
 
 }
@@ -54,6 +66,9 @@ this.props.PostDataHandler(this.props.inputs,this.props.studentselectedid,this.p
 fileSelectHandler  = event => {
 
 this.props.SelectFileHandler(event.target.files[0]);
+this.setState({file:  URL.createObjectURL(event.target.files[0])});
+event.target.value = null;
+
 }
 
 search = () =>{
@@ -65,7 +80,7 @@ filltxtSearch = (e)=>{
 }
 
  render () {
-  const tableHeaders = ['عملیات','آدرس' , 'کدملی', 'نام خانوادگی' , 'نام', 'ردیف'];
+  const tableHeaders = ['عملیات','تصویر','آدرس' , 'کدملی', 'نام خانوادگی' , 'نام', 'ردیف'];
   const formElementsArray = [];
   for (let key in this.props.inputs) {
             formElementsArray.push({
@@ -84,9 +99,10 @@ let main = (<div><div className="container">
                         changed = {(event) => this.props.onIncrementCounter(event , formElement.id)}
                     />
                 ))}
-
+<SelectOption />
                 <input onChange={this.fileSelectHandler} className="selectFile" type="file"  />
-                <img src={this.props.selectedFile} />
+ {this.state.file !=null ?<Upload url={this.state.file} /> : "" }
+
 <div>
 <button className="submit" onClick={()=> this.postData()} >{this.props.isEditMode == true ? "ویرایش" : "ثبت"}</button>
 <div>

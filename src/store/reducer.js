@@ -158,17 +158,18 @@ case actionTypes.EditData :
 
 var resetOrderForm = {...state.orderForm};
 var selectedUserId = {...state};
-resetOrderForm.name.value = action.name[1].innerHTML;
-resetOrderForm.lastname.value =action.name[2].innerHTML; 
+resetOrderForm.name.value = action.name[5].innerHTML;
+resetOrderForm.lastname.value =action.name[4].innerHTML; 
 resetOrderForm.nationalcode.value = action.name[3].innerHTML;
-resetOrderForm.adddress.value = action.name[4].innerHTML;
+resetOrderForm.adddress.value = action.name[2].innerHTML;
 
 return {
 ...state ,
 
 orderForm : resetOrderForm,
-studentselectedid : action.name[5].innerHTML,
-isEditMode : true
+studentselectedid : action.name[6].innerHTML,
+isEditMode : true,
+
 
 }
 
