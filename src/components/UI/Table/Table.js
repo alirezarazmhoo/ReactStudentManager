@@ -14,7 +14,7 @@ class Table extends Component {
          return (
             <tr id={id}>
                <td><button  onClick={this.props.question} className="btn btn-danger">حذف</button>|<button onClick={this.props.edit} className="btn btn-primary">ویرایش</button></td>
-               <td>{major.name}</td>
+               <td>{major == null ? "Empty" :major.name }</td>
                <td> { url == null ? "noImage" :  <img src={"http://localhost:81"+ url}/>} </td>
             
                <td>{address}</td>

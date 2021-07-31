@@ -13,6 +13,8 @@ export const CloseModalHandler = 'CloseModalHandler';
 export const SearchInputHandler = 'SearchInputHandler';
 export const SelectFileHandler = 'SelectFileHandler';
 export const MajorInputHandler = 'MajorInputHandler';
+export const FillMajorHandler = 'FillMajorHandler';
+
 
 
 

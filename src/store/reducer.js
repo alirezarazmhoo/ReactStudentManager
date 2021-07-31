@@ -234,6 +234,14 @@ txtSearchValue : action.txtSearchValue
  ...state ,
  majorId : action.majaorid
  }
+ case actionTypes.FillMajorHandler :
+ return {
+ ...state ,
+ majorList : action.majorList
+ }
+
+
+ 
 
   }
     return state;

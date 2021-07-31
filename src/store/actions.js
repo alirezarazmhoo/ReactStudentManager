@@ -1,5 +1,6 @@
 import axios from '../axios';
 import * as actionTypes from './types';
+import TutorialDataService from './Service' 
 
 export const GetDataFromServer = ( studentlist , majorList ) => {
 
@@ -31,10 +32,39 @@ return {
     };
 }
 
-export const initGetData = (isSearch , txt) => {
+// export const initGetData = (isSearch , txt) => {
 
-let url = '';
+// let url = '';
+//  const arrayMajorData = []  ;
+
+// if(isSearch == true) {
+
+// url = 'Students?txtSearch='+ txt;
+// }
+// else{
+//   url = 'Students?pageNumber=1' ; 
+// }
+
+// return dispatch => {
+//     const arraystudent4 = []  ;
+//   axios.get(url ).then(response => {
+//   const myites4 = response.data.students == null ? 0 : response.data.students; 
+//  for (var i = 0; i < myites4.length; i++) {
+//    arraystudent4.push(myites4[i]);
+//  }
+
+//  dispatch(GetDataFromServer(arraystudent4 ,GetMajorFromServer() ));
+ 
+
+//  }); 
+// }
+// }
+
+
+export const initGetData = (isSearch , txt) => async (dispatch) => {
+  let url = '';
  const arrayMajorData = []  ;
+
 
 if(isSearch == true) {
 
@@ -44,34 +74,50 @@ else{
   url = 'Students?pageNumber=1' ; 
 }
 
-return dispatch => {
-    const arraystudent4 = []  ;
-  axios.get(url ).then(response => {
+ const arraystudent4 = []  ;
+
+try {
+ await axios.get(url ).then(response => {
   const myites4 = response.data.students == null ? 0 : response.data.students; 
  for (var i = 0; i < myites4.length; i++) {
    arraystudent4.push(myites4[i]);
  }
-
- dispatch(GetDataFromServer(arraystudent4 ,GetMajorFromServer() ));
- 
-
  }); 
-}
-}
+await axios.get('Major' ).then(response => {
+  const majorides = response.data.majors ; 
+ for (var i = 0; i < majorides.length; i++) {
+   arrayMajorData.push(majorides[i]);
+ }
+ }); 
+ 
+dispatch({
+type: actionTypes.Get_Data,
+realstudents : arraystudent4,
+majorList : arrayMajorData
+});
+      
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const Remove_Data =  (studentid) => {
-
-const arraystudent5 = []  ;
 return dispatch => {
+const arraystudent5 = []  ;
+ const arrayMajorData = []  ;
  axios.post('Students/DeleteStudent/'+ studentid +'').then(response => {
  axios.get('Students?pageNumber=1' ).then(response => {
   const myites5 = response.data.students == null ? 0 : response.data.students; 
  for (var i = 0; i < myites5.length; i++) {
    arraystudent5.push(myites5[i]);
  }
-let de  =  GetMajorFromServer() ;
-
- dispatch(GetDataFromServer(arraystudent5,de));
+ axios.get('Major' ).then(response => {
+  const majorides = response.data.majors ; 
+ for (var i = 0; i < majorides.length; i++) {
+   arrayMajorData.push(majorides[i]);
+ }
+ dispatch(GetDataFromServer(arraystudent5,arrayMajorData));
+ }); 
  }); 
  });
  }; 
@@ -97,7 +143,7 @@ id = 0
 
 return dispatch => {
 const arraystudent5 = []  ;
-
+const arrayMajorData = [] ; 
 const post = {
 name :inputs.name.value ,
 lastname : inputs.lastname.value , 
@@ -121,12 +167,22 @@ fd.append("majorId" , majorId);
  for (var i = 0; i < myites5.length; i++) {
    arraystudent5.push(myites5[i]);
  }
- dispatch(GetDataFromServer(arraystudent5 ,GetMajorFromServer() ));
+  axios.get('Major' ).then(response => {
+  const majorides = response.data.majors ; 
+ for (var i = 0; i < majorides.length; i++) {
+   arrayMajorData.push(majorides[i]);
+ }
+
+ dispatch(GetDataFromServer(arraystudent5 ,arrayMajorData ));
+ });
  }); 
   });
 }
 }
-export const GetMajorFromServer = ( )=>{
+
+
+
+ export const  GetMajorFromServer = ( )=>{
 const arrayMajorData = [];
 
 axios.get('Major' ).then(response => {
