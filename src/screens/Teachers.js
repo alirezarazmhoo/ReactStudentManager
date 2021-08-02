@@ -46,12 +46,14 @@ this.props.CloseModalHandler();
 
 edit = (e) =>{
  this.props.EditData( e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells );
-if(e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[1].getElementsByTagName("img")[0] !=null)
+if(e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[2].getElementsByTagName("img")[0] !=null)
 {
 
-this.setState({file: e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[1].getElementsByTagName("img")[0].src});
+this.setState({file: e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[2].getElementsByTagName("img")[0].src});
 }
 else{
+
+
     this.setState({file : null})
 }
 
@@ -103,7 +105,7 @@ let main = (<div><div className="container">
                         changed = {(event) => this.props.onIncrementCounter(event , formElement.id)}
                     />
                 ))}
-<SelectOption handleChange={this.handleChange} list={this.props.majorList} />
+<SelectOption choosedItem={this.props.majorId} handleChange={this.handleChange} list={this.props.majorList} />
                 <input onChange={this.fileSelectHandler} className="selectFile" type="file"  />
  {this.state.file !=null ?<Upload url={this.state.file} /> : "" }
 

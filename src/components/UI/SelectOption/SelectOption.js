@@ -4,14 +4,25 @@ class SelectOption extends Component {
   constructor(props){
     super(props)
     this.state = {
-      item: this.props.list
+      item: this.props.list , 
+    
     }
   }
 
   render() {
- let optionTemplate = this.props.list.map(v => (
-      <option value={v.id}>{v.name}</option>
-    ));
+let choosedItem = this.props.choosedItem;
+
+ let optionTemplate = this.props.list.map(function callbackFn(element, index) { 
+   
+   if(element.id ==  choosedItem){
+
+ return  <option    value={element.id}>{element.name}</option>
+   }
+   else{
+ return  <option selected   value={element.id}>{element.name}</option>
+
+   }
+})
 
 
 

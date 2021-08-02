@@ -123,13 +123,8 @@ const arraystudent5 = []  ;
  }; 
 }
 
-
-
-
-
-
-
 export const PostDataHandler = (inputs,id , mode , file , majorId)=> {
+
 const fd  = new FormData();
 
 let url = "Students/EditStudent";
@@ -161,7 +156,7 @@ fd.append("majorId" , majorId);
 
 
  axios.post(url, fd ).then(response => {
-   console.log(response.message);
+
  axios.get('Students?pageNumber=1' ).then(response => {
   const myites5 = response.data.students ; 
  for (var i = 0; i < myites5.length; i++) {

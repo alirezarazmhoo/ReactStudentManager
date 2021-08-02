@@ -160,16 +160,16 @@ case actionTypes.EditData :
 
 var resetOrderForm = {...state.orderForm};
 var selectedUserId = {...state};
-resetOrderForm.name.value = action.name[5].innerHTML;
-resetOrderForm.lastname.value =action.name[4].innerHTML; 
-resetOrderForm.nationalcode.value = action.name[3].innerHTML;
-resetOrderForm.adddress.value = action.name[2].innerHTML;
+resetOrderForm.name.value = action.name[6].innerHTML;
+resetOrderForm.lastname.value =action.name[5].innerHTML; 
+resetOrderForm.nationalcode.value = action.name[4].innerHTML;
+resetOrderForm.adddress.value = action.name[3].innerHTML;
 
 return {
 ...state ,
 
 orderForm : resetOrderForm,
-studentselectedid : action.name[6].innerHTML,
+studentselectedid : action.name[7].innerHTML,
 isEditMode : true,
 
 
@@ -194,7 +194,8 @@ resetOrderForm.adddress.value = '';
  isEditMode : false,
  modalShow : false , 
  txtSearchValue : '',
- majorList : action.majorList
+ majorList : action.majorList,
+ majorId :action.majorList[0].id
  }
 
 case actionTypes.ModalHandler :
