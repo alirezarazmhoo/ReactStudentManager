@@ -15,11 +15,11 @@ let choosedItem = this.props.choosedItem;
  let optionTemplate = this.props.list.map(function callbackFn(element, index) { 
    
    if(element.id ==  choosedItem){
-
- return  <option    value={element.id}>{element.name}</option>
+ return  <option  selected  value={element.id}>{element.name}</option>
    }
    else{
- return  <option selected   value={element.id}>{element.name}</option>
+
+ return  <option    value={element.id}>{element.name}</option>
 
    }
 })

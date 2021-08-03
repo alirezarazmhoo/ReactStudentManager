@@ -11,7 +11,8 @@ import SelectOption from '../components/UI/SelectOption/SelectOption';
 class Teachers extends Component {
 
     state = {
-      file: this.props.selectedFile
+      file: this.props.selectedFile,
+      majorId : this.props.majorId
     }
 
 componentDidMount(){  
@@ -26,11 +27,7 @@ nextPage = ()=> {
 previousPage = () => {
 
 }
-//  question = (e) => {
-//  this.props.Remove_Data(e.target.parentNode.parentNode.id);
 
-
-// };
  question = (e) => {
 
    this.props.ModalHandler(e.target.parentNode.parentNode.id);
@@ -45,6 +42,7 @@ this.props.CloseModalHandler();
 }
 
 edit = (e) =>{
+  this.setState({majorId : e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].getAttribute("majorId")})
  this.props.EditData( e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells );
 if(e.target.parentNode.parentNode.parentNode.rows[e.target.parentNode.parentNode.rowIndex].cells[2].getElementsByTagName("img")[0] !=null)
 {
@@ -105,7 +103,7 @@ let main = (<div><div className="container">
                         changed = {(event) => this.props.onIncrementCounter(event , formElement.id)}
                     />
                 ))}
-<SelectOption choosedItem={this.props.majorId} handleChange={this.handleChange} list={this.props.majorList} />
+<SelectOption choosedItem={this.state.majorId} handleChange={this.handleChange} list={this.props.majorList} />
                 <input onChange={this.fileSelectHandler} className="selectFile" type="file"  />
  {this.state.file !=null ?<Upload url={this.state.file} /> : "" }
 

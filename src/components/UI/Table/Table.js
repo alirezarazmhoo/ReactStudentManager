@@ -10,9 +10,9 @@ class Table extends Component {
    }
      renderTableData() {
       return this.props.personsArray.map((persons, index) => {
-         const { id, name, lastname, nationalcode, address , url ,major } = persons 
+         const { id, name, lastname, nationalcode, address , url ,major ,majorId} = persons 
          return (
-            <tr id={id}>
+            <tr id={id} majorId={majorId}>
                <td><button  onClick={this.props.question} className="btn btn-danger">حذف</button>|<button onClick={this.props.edit} className="btn btn-primary">ویرایش</button></td>
                <td>{major == null ? "Empty" :major.name }</td>
                <td> { url == null ? "noImage" :  <img src={"http://localhost:81"+ url}/>} </td>
